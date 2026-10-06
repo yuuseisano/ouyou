@@ -1,6 +1,8 @@
-﻿#include <iostream>
+﻿#include "Game.h"
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    // シングルトン Game を実行
+    Game::Instance().Run();
+    return 0;
 }
