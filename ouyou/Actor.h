@@ -19,6 +19,9 @@ public:
     const std::string& GetType() const { return mType; }
     const std::string& GetName() const { return mName; }
 
+    // 速さを返す
+    int GetSpeed() const { return mStats.speed; }
+
     // FSM へアクセス（テストや外部操作用）
     StateMachine<Actor>& GetStateMachine() { return mStateMachine; }
 

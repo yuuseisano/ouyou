@@ -9,6 +9,7 @@ struct Stats
     int maxHp;
     int attack;
     int defense;
+    int speed; // 追加：速さ（ターン順に影響）
 };
 
 // データテーブル（ヘッダオンリー）
@@ -26,10 +27,14 @@ private:
     static const std::unordered_map<std::string, Stats>& GetTable()
     {
         static std::unordered_map<std::string, Stats> table = {
-            { "Player", {100, 20, 5} },
-            { "Slime",  {30, 5, 1} },
-            { "Goblin", {50, 12, 3} },
-            { "Default",{10, 1, 0} }
+            { "Player",   {100, 20, 5, 10} },
+            { "Slime",    {30, 5, 1, 8} },
+
+
+            { "Goblin",   {50, 12, 3, 12} },   // 速い敵（プレイヤーより先に動く可能性あり）
+            { "Skeleton", {40, 8, 2, 9} },
+            { "Dragon",   {200, 35, 10, 6} },
+            { "Default",  {10, 1, 0, 5} }
         };
         return table;
     }

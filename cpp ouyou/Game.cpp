@@ -8,7 +8,6 @@
 #include <limits>
 #include <random>
 #include <vector>
-#include <iostream>
 
 namespace
 {
@@ -95,14 +94,7 @@ void Game::Run()
     for (auto& e : initialEnemies)
     {
         AddActor(e);
-    }
-
-    // 生成された敵を一覧表示（名前・タイプ・HP・速さ）
-    std::cout << "=== 出現した敵 ===\n";
-    for (auto& e : initialEnemies)
-    {
-        std::cout << e->GetName() << " [" << e->GetType() << "] HP:" << e->GetHp()
-                  << " SPD:" << e->GetSpeed() << "\n";
+        std::cout << e->GetName() << " が現れた！\n";
     }
 
     std::cout << "=== コンソールRPG 開始 ===\n";
@@ -114,29 +106,21 @@ void Game::Run()
     {
         std::cout << "\n--- ターン " << turn << " ---\n";
 
-        // ラウンド開始時の行動対象スナップショットを作成（生存者のみ）
-        std::vector<std::shared_ptr<Actor>> turnOrder;
-        for (auto& a : mActors)
-        {
-            if (!a->IsDead()) turnOrder.push_back(a);
-        }
+        // ループ中に新しいアクターが追加されても、そのターンの処理は追加前のアクターのみ行う
+        size_t actorsToProcess = mActors.size();
 
-        // 速さが高い順にソート（同速は名前で安定ソート）
-        std::sort(turnOrder.begin(), turnOrder.end(),
-                  [](const std::shared_ptr<Actor>& a, const std::shared_ptr<Actor>& b) {
-                      if (a->GetSpeed() != b->GetSpeed()) return a->GetSpeed() > b->GetSpeed();
-                      return a->GetName() < b->GetName();
-                  });
-
-        for (auto& actor : turnOrder)
+        for (size_t i = 0; i < actorsToProcess; ++i)
         {
-            // 既に倒れている場合やゲームから削除されている場合はスキップ
+            // 安全のため、リムーブされたりして空になっている場合のチェック
+            if (i >= mActors.size()) break;
+
+            auto& actor = mActors[i];
             if (actor->IsDead()) continue;
 
             if (actor->GetType() == "Player")
             {
-                // プレイヤー入力メニュー
-                std::cout << "\nあなたの番: " << actor->GetName() << " (HP: " << actor->GetHp() << " SPD:" << actor->GetSpeed() << ")\n";
+                // プレイヤー入力メニュー（敵追加は削除）
+                std::cout << "\nあなたの番: " << actor->GetName() << " (HP: " << actor->GetHp() << ")\n";
                 std::cout << "1) 攻撃  2) ステータス表示  3) 待機  4) 終了\n";
                 int choice = ReadIntInRange("選択> ", 1, 4);
 
@@ -159,8 +143,7 @@ void Game::Run()
                         std::cout << "攻撃対象：\n";
                         for (size_t idx = 0; idx < enemies.size(); ++idx)
                         {
-                            std::cout << (idx + 1) << ") " << enemies[idx]->GetName() << " (HP: " << enemies[idx]->GetHp()
-                                      << " SPD:" << enemies[idx]->GetSpeed() << ")\n";
+                            std::cout << (idx + 1) << ") " << enemies[idx]->GetName() << " (HP: " << enemies[idx]->GetHp() << ")\n";
                         }
                         int t = ReadIntInRange("対象番号> ", 1, static_cast<int>(enemies.size()));
                         actor->Attack(*enemies[t - 1]);
@@ -173,7 +156,6 @@ void Game::Run()
                     {
                         std::cout << a->GetName() << " [" << a->GetType() << "] HP:" << a->GetHp()
                                   << " ATK:" << a->GetAttack() << " DEF:" << a->GetDefense()
-                                  << " SPD:" << a->GetSpeed()
                                   << (a->IsDead() ? " (倒)" : "") << "\n";
                     }
                 }
@@ -198,7 +180,6 @@ void Game::Run()
                 }
                 if (playerTarget)
                 {
-                    std::cout << actor->GetName() << " (SPD:" << actor->GetSpeed() << ") の行動：\n";
                     actor->Attack(*playerTarget);
                 }
             }
@@ -206,12 +187,13 @@ void Game::Run()
             // 各ターンごとに状態更新
             actor->Update();
 
+            // プレイヤーが要求した終了ならループ抜け
             if (quitRequested) break;
         }
 
         RemoveDeadActors();
 
-        // 終了判定
+        // 終了判定: プレイヤーが生存しているか、敵が全滅しているか、またはプレイヤー終了要求
         bool playerAlive = false;
         bool anyEnemyAlive = false;
         for (auto& a : mActors)
