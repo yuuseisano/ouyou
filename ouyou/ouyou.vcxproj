@@ -132,7 +132,9 @@
     <ClInclude Include="DataTable.h" />
     <ClInclude Include="Factory.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Item.h" />
     <ClInclude Include="ObjectPool.h" />
+    <ClInclude Include="Spell.h" />
     <ClInclude Include="State.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,18 +1,14 @@
 #include "Actor.h"
+#include "Item.h"
 #include <iostream>
+#include <algorithm>
 
 // 簡易状態：Idle / Attack / Dead
 class IdleState : public State<Actor>
 {
 public:
-    void Enter(Actor& owner) override
-    {
-        // nothing
-    }
-    void Execute(Actor& owner) override
-    {
-        // 待機中のログ（省略可）
-    }
+    void Enter(Actor& owner) override { }
+    void Execute(Actor& owner) override { }
     void Exit(Actor& owner) override {}
 };
 
@@ -40,6 +36,7 @@ Actor::Actor(const std::string& type, const std::string& name)
     , mName(name)
     , mStats(DataTable::Get(type))
     , mHp(mStats.maxHp)
+    , mMp(mStats.maxMp)
     , mStateMachine(*this)
 {
     // 初期状態は Idle
@@ -80,4 +77,59 @@ void Actor::TakeDamage(int amount)
     {
         mStateMachine.ChangeState(std::make_shared<DeadState>());
     }
+}
+
+bool Actor::CastSpell(size_t spellIndex, Actor& target)
+{
+    const auto& spells = GetSpellBook();
+    if (spellIndex >= spells.size())
+    {
+        std::cout << "存在しない魔法です。\n";
+        return false;
+    }
+
+    const Spell& sp = spells[spellIndex];
+
+    if (IsDead())
+    {
+        std::cout << mName << " は行動できない。\n";
+        return false;
+    }
+
+    if (mMp < sp.cost)
+    {
+        std::cout << "MPが足りない。\n";
+        return false;
+    }
+
+    mMp -= sp.cost;
+
+    // 魔法ダメージは装甲を無視する（設計上の選択）。必要なら target.GetDefense() を引く。
+    int damage = sp.power;
+    std::cout << mName << " は " << sp.name << " を唱えた！ " << target.GetName() << " に " << damage << " の魔法ダメージ。\n";
+    target.TakeDamage(damage);
+
+    // 魔法使用後は AttackState に（簡易）
+    mStateMachine.ChangeState(std::make_shared<AttackState>());
+    return true;
+}
+
+void Actor::AddItem(std::shared_ptr<Item> item)
+{
+    if (!item) return;
+    mInventory.push_back(item);
+}
+
+bool Actor::UseItem(size_t index)
+{
+    if (index >= mInventory.size()) return false;
+    auto item = mInventory[index];
+    if (!item) return false;
+
+    // アイテム効果を適用
+    item->Use(*this);
+
+    // 使用後はインベントリから削除
+    mInventory.erase(mInventory.begin() + static_cast<std::ptrdiff_t>(index));
+    return true;
 }
