@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Model" />
+    <Filter Include="View" />
+    <Filter Include="Controller" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ouyou.cpp">
@@ -22,7 +25,16 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Actor.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="GameModel.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="GameView.cpp">
+      <Filter>View</Filter>
+    </ClCompile>
+    <ClCompile Include="GameController.cpp">
+      <Filter>Controller</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -30,25 +42,34 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DataTable.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>Model</Filter>
     </ClInclude>
     <ClInclude Include="State.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>Model</Filter>
     </ClInclude>
     <ClInclude Include="Actor.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>Model</Filter>
     </ClInclude>
     <ClInclude Include="Factory.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>Model</Filter>
     </ClInclude>
     <ClInclude Include="ObjectPool.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Item.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>Model</Filter>
     </ClInclude>
     <ClInclude Include="Spell.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="GameModel.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="GameView.h">
+      <Filter>View</Filter>
+    </ClInclude>
+    <ClInclude Include="GameController.h">
+      <Filter>Controller</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

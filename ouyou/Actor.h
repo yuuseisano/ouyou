@@ -16,7 +16,7 @@ public:
     virtual ~Actor() = default;
 
     void Update();
-    void Attack(Actor& target);
+    int Attack(Actor& target);
     void TakeDamage(int amount);
 
     bool IsDead() const { return mHp <= 0; }

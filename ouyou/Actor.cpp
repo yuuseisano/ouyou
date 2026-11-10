@@ -1,9 +1,9 @@
-#include "Actor.h"
+ï»¿#include "Actor.h"
 #include "Item.h"
-#include <iostream>
+
 #include <algorithm>
 
-// ŠÈˆÕó‘ÔFIdle / Attack / Dead
+// ç°¡æ˜“çŠ¶æ…‹ï¼šIdle / Attack / Dead
 class IdleState : public State<Actor>
 {
 public:
@@ -25,7 +25,6 @@ class DeadState : public State<Actor>
 public:
     void Enter(Actor& owner) override
     {
-        std::cout << owner.GetName() << " ‚Í“|‚ê‚½B\n";
     }
     void Execute(Actor& owner) override {}
     void Exit(Actor& owner) override {}
@@ -39,7 +38,7 @@ Actor::Actor(const std::string& type, const std::string& name)
     , mMp(mStats.maxMp)
     , mStateMachine(*this)
 {
-    // ‰Šúó‘Ô‚Í Idle
+    // åˆæœŸçŠ¶æ…‹ã¯ Idle
     mStateMachine.ChangeState(std::make_shared<IdleState>());
 }
 
@@ -52,27 +51,25 @@ void Actor::Update()
     mStateMachine.Update();
 }
 
-void Actor::Attack(Actor& target)
+int Actor::Attack(Actor& target)
 {
     if (IsDead())
     {
-        std::cout << mName << " ‚Ís“®‚Å‚«‚È‚¢B\n";
-        return;
+        return 0;
     }
 
     int damage = std::max(0, GetAttack() - target.GetDefense());
-    std::cout << mName << " ‚ª " << target.GetName() << " ‚ÉUŒ‚I ƒ_ƒ[ƒW " << damage << "\n";
     target.TakeDamage(damage);
 
-    // UŒ‚‚É©•ª‚ğ AttackState ‚É‚µ‚Ä‚¨‚­iƒfƒ‚—pj
+    // æ”»æ’ƒæ™‚ã«è‡ªåˆ†ã‚’ AttackState ã«ã—ã¦ãŠãï¼ˆãƒ‡ãƒ¢ç”¨ï¼‰
     mStateMachine.ChangeState(std::make_shared<AttackState>());
+    return damage;
 }
 
 void Actor::TakeDamage(int amount)
 {
     mHp -= amount;
     if (mHp < 0) mHp = 0;
-    std::cout << mName << " ‚Ìc‚èHP: " << mHp << "\n";
     if (IsDead())
     {
         mStateMachine.ChangeState(std::make_shared<DeadState>());
@@ -84,7 +81,6 @@ bool Actor::CastSpell(size_t spellIndex, Actor& target)
     const auto& spells = GetSpellBook();
     if (spellIndex >= spells.size())
     {
-        std::cout << "‘¶İ‚µ‚È‚¢–‚–@‚Å‚·B\n";
         return false;
     }
 
@@ -92,24 +88,21 @@ bool Actor::CastSpell(size_t spellIndex, Actor& target)
 
     if (IsDead())
     {
-        std::cout << mName << " ‚Ís“®‚Å‚«‚È‚¢B\n";
         return false;
     }
 
     if (mMp < sp.cost)
     {
-        std::cout << "MP‚ª‘«‚è‚È‚¢B\n";
         return false;
     }
 
     mMp -= sp.cost;
 
-    // –‚–@ƒ_ƒ[ƒW‚Í‘•b‚ğ–³‹‚·‚éiİŒvã‚Ì‘I‘ğjB•K—v‚È‚ç target.GetDefense() ‚ğˆø‚­B
+    // é­”æ³•ãƒ€ãƒ¡ãƒ¼ã‚¸ã¯è£…ç”²ã‚’ç„¡è¦–ã™ã‚‹ï¼ˆè¨­è¨ˆä¸Šã®é¸æŠï¼‰ã€‚å¿…è¦ãªã‚‰ target.GetDefense() ã‚’å¼•ãã€‚
     int damage = sp.power;
-    std::cout << mName << " ‚Í " << sp.name << " ‚ğ¥‚¦‚½I " << target.GetName() << " ‚É " << damage << " ‚Ì–‚–@ƒ_ƒ[ƒWB\n";
     target.TakeDamage(damage);
 
-    // –‚–@g—pŒã‚Í AttackState ‚ÉiŠÈˆÕj
+    // é­”æ³•ä½¿ç”¨å¾Œã¯ AttackState ã«ï¼ˆç°¡æ˜“ï¼‰
     mStateMachine.ChangeState(std::make_shared<AttackState>());
     return true;
 }
@@ -126,10 +119,10 @@ bool Actor::UseItem(size_t index)
     auto item = mInventory[index];
     if (!item) return false;
 
-    // ƒAƒCƒeƒ€Œø‰Ê‚ğ“K—p
+    // ã‚¢ã‚¤ãƒ†ãƒ åŠ¹æœã‚’é©ç”¨
     item->Use(*this);
 
-    // g—pŒã‚ÍƒCƒ“ƒxƒ“ƒgƒŠ‚©‚çíœ
+    // ä½¿ç”¨å¾Œã¯ã‚¤ãƒ³ãƒ™ãƒ³ãƒˆãƒªã‹ã‚‰å‰Šé™¤
     mInventory.erase(mInventory.begin() + static_cast<std::ptrdiff_t>(index));
     return true;
 }

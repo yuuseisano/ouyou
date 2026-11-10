@@ -1,18 +1,18 @@
-#pragma once
+ï»¿#pragma once
 
 #include "Actor.h"
 #include <string>
 #include <memory>
 #include <random>
-#include <iostream>
 
-// ƒVƒ“ƒvƒ‹‚ÈƒAƒCƒeƒ€’è‹`iƒwƒbƒ_ˆê–{‚ÅŠ®Œ‹j
-class Actor; // ‘O•ûéŒ¾iActor.h ‚ğƒCƒ“ƒNƒ‹[ƒh‚µ‚Ä‚¢‚Ü‚·‚ª”O‚Ì‚½‚ßj
+
+// ã‚·ãƒ³ãƒ—ãƒ«ãªã‚¢ã‚¤ãƒ†ãƒ å®šç¾©ï¼ˆãƒ˜ãƒƒãƒ€ä¸€æœ¬ã§å®Œçµï¼‰
+class Actor; // å‰æ–¹å®£è¨€ï¼ˆActor.h ã‚’ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ã—ã¦ã„ã¾ã™ãŒå¿µã®ãŸã‚ï¼‰
 
 enum class ItemType
 {
-    Potion, // HP‰ñ•œ
-    Ether   // MP‰ñ•œ
+    Potion, // HPå›å¾©
+    Ether   // MPå›å¾©
 };
 
 class Item
@@ -25,18 +25,18 @@ public:
     ItemType GetType() const { return mType; }
     int GetValue() const { return mValue; }
 
-    // ƒAƒCƒeƒ€‚ğg—piActor ‘¤‚ªŒø‰Ê‚ğó‚¯æ‚éj
+    // ã‚¢ã‚¤ãƒ†ãƒ ã‚’ä½¿ç”¨ï¼ˆActor å´ãŒåŠ¹æœã‚’å—ã‘å–ã‚‹ï¼‰
     void Use(Actor& user) const;
 
-    // ƒ‰ƒ“ƒ_ƒ€ƒhƒƒbƒv¶¬ƒ†[ƒeƒBƒŠƒeƒB
+    // ãƒ©ãƒ³ãƒ€ãƒ ãƒ‰ãƒ­ãƒƒãƒ—ç”Ÿæˆãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£
     static std::shared_ptr<Item> CreateRandomDrop()
     {
-        // Drop—¦: 60%‚Å‰½‚©ƒhƒƒbƒviPotion:40%, Ether:20%jC40%‚Í‰½‚à—‚Æ‚³‚È‚¢iŒÄ‚Ño‚µ‘¤‚Å nullptr ‚ğƒ`ƒFƒbƒNj
+        // Dropç‡: 60%ã§ä½•ã‹ãƒ‰ãƒ­ãƒƒãƒ—ï¼ˆPotion:40%, Ether:20%ï¼‰ï¼Œ40%ã¯ä½•ã‚‚è½ã¨ã•ãªã„ï¼ˆå‘¼ã³å‡ºã—å´ã§ nullptr ã‚’ãƒã‚§ãƒƒã‚¯ï¼‰
         static std::mt19937& rng = *([]()->std::mt19937* { static std::mt19937 r(static_cast<unsigned int>(std::random_device{}())); return &r; })();
         std::uniform_int_distribution<int> d(1, 100);
         int v = d(rng);
-        if (v <= 40) return std::make_shared<Item>(ItemType::Potion, "Potion", 30); // HP 30 ‰ñ•œ
-        if (v <= 60) return std::make_shared<Item>(ItemType::Ether, "Ether", 20);   // MP 20 ‰ñ•œ
+        if (v <= 40) return std::make_shared<Item>(ItemType::Potion, "Potion", 30); // HP 30 å›å¾©
+        if (v <= 60) return std::make_shared<Item>(ItemType::Ether, "Ether", 20);   // MP 20 å›å¾©
         return nullptr;
     }
 
@@ -46,23 +46,17 @@ private:
     int mValue;
 };
 
-// Item::Use ‚ÌÀ‘•
+// Item::Use ã®å®Ÿè£…
 inline void Item::Use(Actor& user) const
 {
     if (mType == ItemType::Potion)
     {
-        int before = user.mHp;
         user.mHp += mValue;
         if (user.mHp > user.mStats.maxHp) user.mHp = user.mStats.maxHp;
-        int healed = user.mHp - before;
-        std::cout << user.GetName() << " ‚Í " << healed << " HP ‰ñ•œ‚µ‚½BŒ»İHP: " << user.mHp << "\n";
     }
     else if (mType == ItemType::Ether)
     {
-        int before = user.mMp;
         user.mMp += mValue;
         if (user.mMp > user.mStats.maxMp) user.mMp = user.mStats.maxMp;
-        int recovered = user.mMp - before;
-        std::cout << user.GetName() << " ‚Í " << recovered << " MP ‰ñ•œ‚µ‚½BŒ»İMP: " << user.mMp << "\n";
     }
 }
