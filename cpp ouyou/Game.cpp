@@ -1,4 +1,4 @@
-#include "Game.h"
+ï»¿#include "Game.h"
 #include "DataTable.h"
 #include <chrono>
 #include <thread>
@@ -11,7 +11,7 @@
 
 namespace
 {
-    // “ü—Í‚ğˆÀ‘S‚É®”‚Ö•ÏŠ·‚µA”ÍˆÍƒ`ƒFƒbƒN‚·‚éƒwƒ‹ƒp[
+    // å…¥åŠ›ã‚’å®‰å…¨ã«æ•´æ•°ã¸å¤‰æ›ã—ã€ç¯„å›²ãƒã‚§ãƒƒã‚¯ã™ã‚‹ãƒ˜ãƒ«ãƒ‘ãƒ¼
     int ReadIntInRange(const std::string& prompt, int minVal, int maxVal)
     {
         while (true)
@@ -20,7 +20,7 @@ namespace
             std::string line;
             if (!std::getline(std::cin, line))
             {
-                // “ü—ÍƒXƒgƒŠ[ƒ€‚ª•Â‚¶‚ç‚ê‚½ê‡‚ÍÅ¬’l‚ğ•Ô‚·
+                // å…¥åŠ›ã‚¹ãƒˆãƒªãƒ¼ãƒ ãŒé–‰ã˜ã‚‰ã‚ŒãŸå ´åˆã¯æœ€å°å€¤ã‚’è¿”ã™
                 return minVal;
             }
 
@@ -30,18 +30,18 @@ namespace
             {
                 return v;
             }
-            std::cout << "–³Œø‚È“ü—Í‚Å‚·B " << minVal << "?" << maxVal << " ‚Ì”š‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B\n";
+            std::cout << "ç„¡åŠ¹ãªå…¥åŠ›ã§ã™ã€‚ " << minVal << "?" << maxVal << " ã®æ•°å­—ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚\n";
         }
     }
 
-    // —”¶¬Ší‚ğ‰‰ñ‚¾‚¯‰Šú‰»‚µAˆÈŒã‚Ì’Š‘I‚Å‚à“¯‚¶¶¬Ší‚ğg‚¤
+    // ä¹±æ•°ç”Ÿæˆå™¨ã‚’åˆå›ã ã‘åˆæœŸåŒ–ã—ã€ä»¥å¾Œã®æŠ½é¸ã§ã‚‚åŒã˜ç”Ÿæˆå™¨ã‚’ä½¿ã†
     std::mt19937& GetRng()
     {
         static std::mt19937 rng(static_cast<unsigned int>(std::random_device{}()));
         return rng;
     }
 
-    // ƒ‰ƒ“ƒ_ƒ€‚Å“G‚ğ¶¬‚µ‚Ä•Ô‚· (d‚İ•t‚«: Slime:50, Goblin:30, Skeleton:15, Dragon:5)
+    // ãƒ©ãƒ³ãƒ€ãƒ ã§æ•µã‚’ç”Ÿæˆã—ã¦è¿”ã™ (é‡ã¿ä»˜ã: Slime:50, Goblin:30, Skeleton:15, Dragon:5)
     std::vector<std::shared_ptr<Actor>> SpawnRandomEnemies(int count)
     {
         const std::vector<std::string> types = { "Slime", "Goblin", "Skeleton", "Dragon" };
@@ -49,7 +49,7 @@ namespace
         std::discrete_distribution<int> dist(weights.begin(), weights.end());
 
         std::vector<std::shared_ptr<Actor>> result;
-        // ¶¬”‚É‡‚í‚¹‚Ä—Ìˆæ‚ğŠm•Û‚µA’Ç‰Á‚ÌÄŠm•Û‚ğŒ¸‚ç‚·
+        // ç”Ÿæˆæ•°ã«åˆã‚ã›ã¦é ˜åŸŸã‚’ç¢ºä¿ã—ã€è¿½åŠ æ™‚ã®å†ç¢ºä¿ã‚’æ¸›ã‚‰ã™
         result.reserve(count);
         for (int i = 0; i < count; ++i)
         {
@@ -60,7 +60,7 @@ namespace
     }
 }
 
-// ƒQ[ƒ€‘S‘Ì‚Å‹¤—L‚·‚é—Bˆê‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğ•Ô‚·
+// ã‚²ãƒ¼ãƒ å…¨ä½“ã§å…±æœ‰ã™ã‚‹å”¯ä¸€ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’è¿”ã™
 Game& Game::Instance()
 {
     static Game instance;
@@ -69,16 +69,16 @@ Game& Game::Instance()
 
 Game::Game()
 {
-    // ‰Šúƒf[ƒ^ƒe[ƒuƒ‹‚Í Factory ‚ªg‚¤‚½‚ß‚±‚±‚Å‚Í‰½‚à‚µ‚È‚¢
+    // åˆæœŸãƒ‡ãƒ¼ã‚¿ãƒ†ãƒ¼ãƒ–ãƒ«ã¯ Factory ãŒä½¿ã†ãŸã‚ã“ã“ã§ã¯ä½•ã‚‚ã—ãªã„
 }
 
-// ƒvƒŒƒCƒ„[‚Æ“G‚ğ‹¤’Ê‚ÌƒAƒNƒ^[ˆê——‚ÅŠÇ—‚·‚é
+// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¨æ•µã‚’å…±é€šã®ã‚¢ã‚¯ã‚¿ãƒ¼ä¸€è¦§ã§ç®¡ç†ã™ã‚‹
 void Game::AddActor(std::shared_ptr<Actor> actor)
 {
     mActors.push_back(actor);
 }
 
-// €–S‚µ‚½ƒAƒNƒ^[‚ğ––”ö‚Ö‚Ü‚Æ‚ßA‚»‚Ì”ÍˆÍ‚ğˆê——‚©‚çíœ‚·‚é
+// æ­»äº¡ã—ãŸã‚¢ã‚¯ã‚¿ãƒ¼ã‚’æœ«å°¾ã¸ã¾ã¨ã‚ã€ãã®ç¯„å›²ã‚’ä¸€è¦§ã‹ã‚‰å‰Šé™¤ã™ã‚‹
 void Game::RemoveDeadActors()
 {
     mActors.erase(
@@ -87,52 +87,52 @@ void Game::RemoveDeadActors()
         mActors.end());
 }
 
-// ‰Šú”z’u‚ğs‚¢AI—¹ğŒ‚ğ–‚½‚·‚Ü‚Åƒ^[ƒ“‚ği‚ß‚é
+// åˆæœŸé…ç½®ã‚’è¡Œã„ã€çµ‚äº†æ¡ä»¶ã‚’æº€ãŸã™ã¾ã§ã‚¿ãƒ¼ãƒ³ã‚’é€²ã‚ã‚‹
 void Game::Run()
 {
-    // ƒvƒŒƒCƒ„[¶¬
+    // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ç”Ÿæˆ
     auto player = ActorFactory::Create("Player");
     AddActor(player);
 
-    // “G‚ğƒ‰ƒ“ƒ_ƒ€‚É2‘ÌƒXƒ|[ƒ“
+    // æ•µã‚’ãƒ©ãƒ³ãƒ€ãƒ ã«2ä½“ã‚¹ãƒãƒ¼ãƒ³
     auto initialEnemies = SpawnRandomEnemies(2);
     for (auto& e : initialEnemies)
     {
         AddActor(e);
-        std::cout << e->GetName() << " ‚ªŒ»‚ê‚½I\n";
+        std::cout << e->GetName() << " ãŒç¾ã‚ŒãŸï¼\n";
     }
 
-    std::cout << "=== ƒRƒ“ƒ\[ƒ‹RPG ŠJn ===\n";
-    std::cout << "ƒvƒŒƒCƒ„[‘€ìFUŒ‚EƒXƒe[ƒ^ƒXŠm”FE‘Ò‹@EI—¹‚ª‘I‚×‚Ü‚·B\n";
+    std::cout << "=== ã‚³ãƒ³ã‚½ãƒ¼ãƒ«RPG é–‹å§‹ ===\n";
+    std::cout << "ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼æ“ä½œï¼šæ”»æ’ƒãƒ»ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ç¢ºèªãƒ»å¾…æ©Ÿãƒ»çµ‚äº†ãŒé¸ã¹ã¾ã™ã€‚\n";
 
     int turn = 1;
     bool quitRequested = false;
     while (true)
     {
-        std::cout << "\n--- ƒ^[ƒ“ " << turn << " ---\n";
+        std::cout << "\n--- ã‚¿ãƒ¼ãƒ³ " << turn << " ---\n";
 
-        // ƒ‹[ƒv’†‚ÉV‚µ‚¢ƒAƒNƒ^[‚ª’Ç‰Á‚³‚ê‚Ä‚àA‚»‚Ìƒ^[ƒ“‚Ìˆ—‚Í’Ç‰Á‘O‚ÌƒAƒNƒ^[‚Ì‚İs‚¤
+        // ãƒ«ãƒ¼ãƒ—ä¸­ã«æ–°ã—ã„ã‚¢ã‚¯ã‚¿ãƒ¼ãŒè¿½åŠ ã•ã‚Œã¦ã‚‚ã€ãã®ã‚¿ãƒ¼ãƒ³ã®å‡¦ç†ã¯è¿½åŠ å‰ã®ã‚¢ã‚¯ã‚¿ãƒ¼ã®ã¿è¡Œã†
         size_t actorsToProcess = mActors.size();
 
         for (size_t i = 0; i < actorsToProcess; ++i)
         {
-            // ˆÀ‘S‚Ì‚½‚ßAƒŠƒ€[ƒu‚³‚ê‚½‚è‚µ‚Ä‹ó‚É‚È‚Á‚Ä‚¢‚éê‡‚Ìƒ`ƒFƒbƒN
+            // å®‰å…¨ã®ãŸã‚ã€ãƒªãƒ ãƒ¼ãƒ–ã•ã‚ŒãŸã‚Šã—ã¦ç©ºã«ãªã£ã¦ã„ã‚‹å ´åˆã®ãƒã‚§ãƒƒã‚¯
             if (i >= mActors.size()) break;
 
             auto& actor = mActors[i];
-            // ‚±‚Ìƒ^[ƒ“’†‚É“|‚³‚ê‚½ƒAƒNƒ^[‚É‚Ís“®‚³‚¹‚È‚¢
+            // ã“ã®ã‚¿ãƒ¼ãƒ³ä¸­ã«å€’ã•ã‚ŒãŸã‚¢ã‚¯ã‚¿ãƒ¼ã«ã¯è¡Œå‹•ã•ã›ãªã„
             if (actor->IsDead()) continue;
 
             if (actor->GetType() == "Player")
             {
-                // “ü—Í‚³‚ê‚½”Ô†‚É‰‚¶‚ÄA‚±‚Ìƒ^[ƒ“‚Ìs“®‚ğ‘I‚Ô
-                std::cout << "\n‚ ‚È‚½‚Ì”Ô: " << actor->GetName() << " (HP: " << actor->GetHp() << ")\n";
-                std::cout << "1) UŒ‚  2) ƒXƒe[ƒ^ƒX•\¦  3) ‘Ò‹@  4) I—¹\n";
-                int choice = ReadIntInRange("‘I‘ğ> ", 1, 4);
+                // å…¥åŠ›ã•ã‚ŒãŸç•ªå·ã«å¿œã˜ã¦ã€ã“ã®ã‚¿ãƒ¼ãƒ³ã®è¡Œå‹•ã‚’é¸ã¶
+                std::cout << "\nã‚ãªãŸã®ç•ª: " << actor->GetName() << " (HP: " << actor->GetHp() << ")\n";
+                std::cout << "1) æ”»æ’ƒ  2) ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹è¡¨ç¤º  3) å¾…æ©Ÿ  4) çµ‚äº†\n";
+                int choice = ReadIntInRange("é¸æŠ> ", 1, 4);
 
                 if (choice == 1)
                 {
-                    // UŒ‚‘ÎÛ‚ğ—ñ‹“
+                    // æ”»æ’ƒå¯¾è±¡ã‚’åˆ—æŒ™
                     std::vector<std::shared_ptr<Actor>> enemies;
                     for (auto& a : mActors)
                     {
@@ -142,44 +142,44 @@ void Game::Run()
 
                     if (enemies.empty())
                     {
-                        std::cout << "UŒ‚‘ÎÛ‚ª‚¢‚Ü‚¹‚ñB\n";
+                        std::cout << "æ”»æ’ƒå¯¾è±¡ãŒã„ã¾ã›ã‚“ã€‚\n";
                     }
                     else
                     {
-                        std::cout << "UŒ‚‘ÎÛF\n";
+                        std::cout << "æ”»æ’ƒå¯¾è±¡ï¼š\n";
                         for (size_t idx = 0; idx < enemies.size(); ++idx)
                         {
                             std::cout << (idx + 1) << ") " << enemies[idx]->GetName() << " (HP: " << enemies[idx]->GetHp() << ")\n";
                         }
-                        int t = ReadIntInRange("‘ÎÛ”Ô†> ", 1, static_cast<int>(enemies.size()));
-                        // •\¦ã‚Ì”Ô†‚Í1n‚Ü‚è‚È‚Ì‚ÅA“Yš‚É•ÏŠ·‚µ‚ÄUŒ‚‚·‚é
+                        int t = ReadIntInRange("å¯¾è±¡ç•ªå·> ", 1, static_cast<int>(enemies.size()));
+                        // è¡¨ç¤ºä¸Šã®ç•ªå·ã¯1å§‹ã¾ã‚Šãªã®ã§ã€æ·»å­—ã«å¤‰æ›ã—ã¦æ”»æ’ƒã™ã‚‹
                         actor->Attack(*enemies[t - 1]);
                     }
                 }
                 else if (choice == 2)
                 {
-                    std::cout << "=== ƒXƒe[ƒ^ƒX ===\n";
+                    std::cout << "=== ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ ===\n";
                     for (auto& a : mActors)
                     {
                         std::cout << a->GetName() << " [" << a->GetType() << "] HP:" << a->GetHp()
                                   << " ATK:" << a->GetAttack() << " DEF:" << a->GetDefense()
-                                  << (a->IsDead() ? " (“|)" : "") << "\n";
+                                  << (a->IsDead() ? " (å€’)" : "") << "\n";
                     }
                 }
                 else if (choice == 3)
                 {
-                    std::cout << actor->GetName() << " ‚Í—lq‚ğŒ©‚Ä‚¢‚éB\n";
+                    std::cout << actor->GetName() << " ã¯æ§˜å­ã‚’è¦‹ã¦ã„ã‚‹ã€‚\n";
                 }
                 else if (choice == 4)
                 {
-                    std::cout << "ƒvƒŒƒCƒ„[‚ªƒQ[ƒ€I—¹‚ğ—v‹‚µ‚Ü‚µ‚½B\n";
+                    std::cout << "ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒã‚²ãƒ¼ãƒ çµ‚äº†ã‚’è¦æ±‚ã—ã¾ã—ãŸã€‚\n";
                     quitRequested = true;
                     break;
                 }
             }
             else
             {
-                // ˆê——‚ÅÅ‰‚ÉŒ©‚Â‚©‚Á‚½¶‘¶’†‚ÌƒvƒŒƒCƒ„[‚ğUŒ‚‚·‚é
+                // ä¸€è¦§ã§æœ€åˆã«è¦‹ã¤ã‹ã£ãŸç”Ÿå­˜ä¸­ã®ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’æ”»æ’ƒã™ã‚‹
                 std::shared_ptr<Actor> playerTarget = nullptr;
                 for (auto& a : mActors)
                 {
@@ -191,17 +191,17 @@ void Game::Run()
                 }
             }
 
-            // s“®‚ğI‚¦‚½ƒAƒNƒ^[‚Ìó‘Ô‚ğXV‚·‚é
+            // è¡Œå‹•ã‚’çµ‚ãˆãŸã‚¢ã‚¯ã‚¿ãƒ¼ã®çŠ¶æ…‹ã‚’æ›´æ–°ã™ã‚‹
             actor->Update();
 
-            // ƒvƒŒƒCƒ„[‚ª—v‹‚µ‚½I—¹‚È‚çƒ‹[ƒv”²‚¯
+            // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒè¦æ±‚ã—ãŸçµ‚äº†ãªã‚‰ãƒ«ãƒ¼ãƒ—æŠœã‘
             if (quitRequested) break;
         }
 
-        // ‘Sˆõ‚Ìs“®Œã‚Éíœ‚µAs“®’†‚Ìˆê——‚Ì“Yš‚ª‚¸‚ê‚é‚Ì‚ğ”ğ‚¯‚é
+        // å…¨å“¡ã®è¡Œå‹•å¾Œã«å‰Šé™¤ã—ã€è¡Œå‹•ä¸­ã®ä¸€è¦§ã®æ·»å­—ãŒãšã‚Œã‚‹ã®ã‚’é¿ã‘ã‚‹
         RemoveDeadActors();
 
-        // I—¹”»’è: ƒvƒŒƒCƒ„[‚ª¶‘¶‚µ‚Ä‚¢‚é‚©A“G‚ª‘S–Å‚µ‚Ä‚¢‚é‚©A‚Ü‚½‚ÍƒvƒŒƒCƒ„[I—¹—v‹
+        // çµ‚äº†åˆ¤å®š: ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒç”Ÿå­˜ã—ã¦ã„ã‚‹ã‹ã€æ•µãŒå…¨æ»…ã—ã¦ã„ã‚‹ã‹ã€ã¾ãŸã¯ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼çµ‚äº†è¦æ±‚
         bool playerAlive = false;
         bool anyEnemyAlive = false;
         for (auto& a : mActors)
@@ -212,25 +212,25 @@ void Game::Run()
 
         if (quitRequested)
         {
-            std::cout << "\nƒvƒŒƒCƒ„[‚É‚æ‚èƒQ[ƒ€‚ğI—¹‚µ‚Ü‚·B\n";
+            std::cout << "\nãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«ã‚ˆã‚Šã‚²ãƒ¼ãƒ ã‚’çµ‚äº†ã—ã¾ã™ã€‚\n";
             break;
         }
 
         if (!playerAlive)
         {
-            std::cout << "\n‚ ‚È‚½‚Í”s–k‚µ‚Ü‚µ‚½...\n";
+            std::cout << "\nã‚ãªãŸã¯æ•—åŒ—ã—ã¾ã—ãŸ...\n";
             break;
         }
         if (!anyEnemyAlive)
         {
-            std::cout << "\n“G‚ğ‘S–Å‚³‚¹‚Ü‚µ‚½IŸ—˜I\n";
+            std::cout << "\næ•µã‚’å…¨æ»…ã•ã›ã¾ã—ãŸï¼å‹åˆ©ï¼\n";
             break;
         }
 
-        // I—¹ğŒ‚ğ–‚½‚³‚È‚¯‚ê‚ÎAŸ‚Ìƒ^[ƒ“‚Öi‚Ş
+        // çµ‚äº†æ¡ä»¶ã‚’æº€ãŸã•ãªã‘ã‚Œã°ã€æ¬¡ã®ã‚¿ãƒ¼ãƒ³ã¸é€²ã‚€
         ++turn;
         std::this_thread::sleep_for(std::chrono::milliseconds(300));
     }
 
-    std::cout << "=== ƒQ[ƒ€I—¹ ===\n";
+    std::cout << "=== ã‚²ãƒ¼ãƒ çµ‚äº† ===\n";
 }

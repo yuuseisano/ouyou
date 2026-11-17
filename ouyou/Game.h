@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "GameModel.h"
 
 // 既存の起動方法を保ち、モデル・ビュー・コントローラーを組み立てる窓口。

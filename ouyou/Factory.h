@@ -1,44 +1,44 @@
-#pragma once
+ï»¿#pragma once
 
 #include <memory>
 #include <string>
 #include "Actor.h"
 
-// ƒVƒ“ƒvƒ‹‚Èƒtƒ@ƒNƒgƒŠ
+// ã‚·ãƒ³ãƒ—ãƒ«ãªãƒ•ã‚¡ã‚¯ãƒˆãƒª
 class ActorFactory
 {
 public:
-    // ƒCƒ“ƒXƒ^ƒ“ƒX‰»‚Í‹Ö~‚µAÃ“I‚È¶¬ŠÖ”‚¾‚¯‚ğg‚¤B
+    // ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹åŒ–ã¯ç¦æ­¢ã—ã€é™çš„ãªç”Ÿæˆé–¢æ•°ã ã‘ã‚’ä½¿ã†ã€‚
     ActorFactory() = delete;
 
     static std::shared_ptr<Actor> Create(const std::string& type)
     {
-        // í—Ş‚É‰‚¶‚½–¼‘O‚ğ•t‚¯‚Ä¶¬‚µA“G‚É‚Íí—Ş‚²‚Æ‚Ì˜A”Ô‚ğ•t‚¯‚éB
+        // ç¨®é¡ã«å¿œã˜ãŸåå‰ã‚’ä»˜ã‘ã¦ç”Ÿæˆã—ã€æ•µã«ã¯ç¨®é¡ã”ã¨ã®é€£ç•ªã‚’ä»˜ã‘ã‚‹ã€‚
         if (type == "Player")
         {
-            return std::make_shared<Actor>("Player", "ålŒö");
+            return std::make_shared<Actor>("Player", "ä¸»äººå…¬");
         }
         else if (type == "Slime")
         {
             static int slimeId = 1;
-            return std::make_shared<Actor>("Slime", "ƒXƒ‰ƒCƒ€#" + std::to_string(slimeId++));
+            return std::make_shared<Actor>("Slime", "ã‚¹ãƒ©ã‚¤ãƒ #" + std::to_string(slimeId++));
         }
         else if (type == "Goblin")
         {
             static int goblinId = 1;
-            return std::make_shared<Actor>("Goblin", "ƒSƒuƒŠƒ“#" + std::to_string(goblinId++));
+            return std::make_shared<Actor>("Goblin", "ã‚´ãƒ–ãƒªãƒ³#" + std::to_string(goblinId++));
         }
         else if (type == "Skeleton")
         {
             static int skeletonId = 1;
-            return std::make_shared<Actor>("Skeleton", "ƒXƒPƒ‹ƒgƒ“#" + std::to_string(skeletonId++));
+            return std::make_shared<Actor>("Skeleton", "ã‚¹ã‚±ãƒ«ãƒˆãƒ³#" + std::to_string(skeletonId++));
         }
         else if (type == "Dragon")
         {
             static int dragonId = 1;
-            return std::make_shared<Actor>("Dragon", "ƒhƒ‰ƒSƒ“#" + std::to_string(dragonId++));
+            return std::make_shared<Actor>("Dragon", "ãƒ‰ãƒ©ã‚´ãƒ³#" + std::to_string(dragonId++));
         }
-        // ƒfƒtƒHƒ‹ƒg
-        return std::make_shared<Actor>("Default", "–³–¼");
+        // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ
+        return std::make_shared<Actor>("Default", "ç„¡å");
     }
 };

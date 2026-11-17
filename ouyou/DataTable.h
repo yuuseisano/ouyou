@@ -1,19 +1,19 @@
-#pragma once
+ï»¿#pragma once
 
 #include <string>
 #include <unordered_map>
 
-// ƒXƒe[ƒ^ƒX\‘¢‘Ì
+// ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹æ§‹é€ ä½“
 struct Stats
 {
     int maxHp;
     int maxMp;
     int attack;
     int defense;
-    int speed; // s“®‡Œˆ’è—p
+    int speed; // è¡Œå‹•é †æ±ºå®šç”¨
 };
 
-// ƒf[ƒ^ƒe[ƒuƒ‹
+// ãƒ‡ãƒ¼ã‚¿ãƒ†ãƒ¼ãƒ–ãƒ«
 class DataTable
 {
 public:
@@ -21,7 +21,7 @@ public:
     {
         auto it = GetTable().find(key);
         if (it != GetTable().end()) return it->second;
-        // –¢“o˜^‚Ìí—Ş‚É‚Í‹¤’Ê‚Ì‰Šú”\—Í’l‚ğg‚¤B
+        // æœªç™»éŒ²ã®ç¨®é¡ã«ã¯å…±é€šã®åˆæœŸèƒ½åŠ›å€¤ã‚’ä½¿ã†ã€‚
         return GetTable().at("Default");
     }
 
@@ -29,12 +29,12 @@ private:
     static const std::unordered_map<std::string, Stats>& GetTable()
     {
         static std::unordered_map<std::string, Stats> table = {
-            // í—Ş–¼‚ÆAÅ‘å‚g‚oEÅ‘å‚l‚oEUŒ‚—ÍE–hŒä—ÍE‘f‘‚³‚Ì‡‚Å’è‹`‚·‚éB
+            // ç¨®é¡åã¨ã€æœ€å¤§ï¼¨ï¼°ãƒ»æœ€å¤§ï¼­ï¼°ãƒ»æ”»æ’ƒåŠ›ãƒ»é˜²å¾¡åŠ›ãƒ»ç´ æ—©ã•ã®é †ã§å®šç¾©ã™ã‚‹ã€‚
             { "Player",   {100, 30, 20, 5, 10} },
             { "Slime",    {30, 0, 5, 1, 8} },
             { "Goblin",   {50, 0, 12, 3, 12} },
             { "Skeleton", {40, 0, 8, 2, 9} },
-            { "Dragon",   {200, 0, 35, 10, 6} },
+            { "Dragon",   {200, 0, 35, 10, 30} },
             { "Default",  {10, 0, 1, 0, 5} }
         };
         return table;

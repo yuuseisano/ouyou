@@ -1,8 +1,8 @@
-#pragma once
+ï»¿#pragma once
 
 #include <memory>
 
-// ó‘ÔƒCƒ“ƒ^[ƒtƒFƒCƒXiƒeƒ“ƒvƒŒ[ƒgj
+// çŠ¶æ…‹ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ã‚¤ã‚¹ï¼ˆãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆï¼‰
 template <typename T>
 class State
 {
@@ -13,7 +13,7 @@ public:
     virtual void Exit(T& owner) = 0;
 };
 
-// ŠÈˆÕó‘Ô‹@ŠB
+// ç°¡æ˜“çŠ¶æ…‹æ©Ÿæ¢°
 template <typename T>
 class StateMachine
 {
@@ -22,7 +22,7 @@ public:
 
     void ChangeState(std::shared_ptr<State<T>> newState)
     {
-        // ‹Œó‘Ô‚ÌI—¹ˆ—‚ğÏ‚Ü‚¹AVó‘Ô‚ÖØ‚è‘Ö‚¦‚ÄŠJnˆ—‚ğs‚¤B
+        // æ—§çŠ¶æ…‹ã®çµ‚äº†å‡¦ç†ã‚’æ¸ˆã¾ã›ã€æ–°çŠ¶æ…‹ã¸åˆ‡ã‚Šæ›¿ãˆã¦é–‹å§‹å‡¦ç†ã‚’è¡Œã†ã€‚
         if (mCurrent) mCurrent->Exit(mOwner);
         mCurrent = newState;
         if (mCurrent) mCurrent->Enter(mOwner);

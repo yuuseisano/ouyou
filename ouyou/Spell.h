@@ -1,24 +1,24 @@
-#pragma once
+ï»¿#pragma once
 
 #include <string>
 #include <vector>
 
-// ’Pƒ‚ÈƒXƒyƒ‹’è‹`
+// å˜ç´”ãªã‚¹ãƒšãƒ«å®šç¾©
 struct Spell
 {
     std::string name;
-    int cost;   // MP Á”ï
-    int power;  // ˆĞ—Íi–‚–@ƒ_ƒ[ƒWj
+    int cost;   // MP æ¶ˆè²»
+    int power;  // å¨åŠ›ï¼ˆé­”æ³•ãƒ€ãƒ¡ãƒ¼ã‚¸ï¼‰
 };
 
-// ‘I‘ğ‰æ–Ê‚Åg‚¤‡˜‚ÅA–‚–@–¼EÁ”ï‚l‚oEˆĞ—Í‚Ìˆê——‚ğ•Ô‚·B
+// é¸æŠç”»é¢ã§ä½¿ã†é †åºã§ã€é­”æ³•åãƒ»æ¶ˆè²»ï¼­ï¼°ãƒ»å¨åŠ›ã®ä¸€è¦§ã‚’è¿”ã™ã€‚
 inline const std::vector<Spell>& GetSpellBook()
 {
     static std::vector<Spell> spells = {
-        { "Spark",   5,  10 },  // ã‚¢–‚–@
+        { "Water",   5,  10 },  // å¼±ã„é­”æ³•
         { "Fire",   10,  25 },
         { "Thunder",15,  45 },
-        { "Meteor", 25,  90 }   // ‹­—Í‚È–‚–@
+        { "Meteor", 25,  90 }   // å¼·åŠ›ãªé­”æ³•
     };
     return spells;
 }

@@ -11,8 +11,8 @@ class Actor; // 前方宣言（Actor.h をインクルードしていますが�
 
 enum class ItemType
 {
-    Potion, // HP回復
-    Ether   // MP回復
+    HP_Potion, // HP回復
+    MP_Potion   // MP回復
 };
 
 class Item
@@ -35,8 +35,8 @@ public:
         static std::mt19937& rng = *([]()->std::mt19937* { static std::mt19937 r(static_cast<unsigned int>(std::random_device{}())); return &r; })();
         std::uniform_int_distribution<int> d(1, 100);
         int v = d(rng);
-        if (v <= 40) return std::make_shared<Item>(ItemType::Potion, "Potion", 30); // HP 30 回復
-        if (v <= 60) return std::make_shared<Item>(ItemType::Ether, "Ether", 20);   // MP 20 回復
+        if (v <= 40) return std::make_shared<Item>(ItemType::HP_Potion, "Potion", 30); // HP 30 回復
+        if (v <= 60) return std::make_shared<Item>(ItemType::MP_Potion, "Ether", 20);   // MP 20 回復
         return nullptr;
     }
 
@@ -49,12 +49,12 @@ private:
 // Item::Use の実装
 inline void Item::Use(Actor& user) const
 {
-    if (mType == ItemType::Potion)
+    if (mType == ItemType::HP_Potion)
     {
         user.mHp += mValue;
         if (user.mHp > user.mStats.maxHp) user.mHp = user.mStats.maxHp;
     }
-    else if (mType == ItemType::Ether)
+    else if (mType == ItemType::MP_Potion)
     {
         user.mMp += mValue;
         if (user.mMp > user.mStats.maxMp) user.mMp = user.mStats.maxMp;

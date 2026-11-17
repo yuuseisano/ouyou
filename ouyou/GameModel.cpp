@@ -1,4 +1,4 @@
-#include "GameModel.h"
+﻿#include "GameModel.h"
 #include "Factory.h"
 #include <algorithm>
 #include <random>

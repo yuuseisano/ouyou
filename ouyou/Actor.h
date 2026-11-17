@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <string>
 #include <memory>
@@ -7,9 +7,9 @@
 #include "DataTable.h"
 #include "Spell.h"
 
-class Item; // ‘O•ûéŒ¾
+class Item; // å‰æ–¹å®£è¨€
 
-// ”\—Í’lAŠ•iAí“¬ˆ—AŒ»İ‚Ìó‘Ô‚ğ•Û‚·‚éƒLƒƒƒ‰ƒNƒ^[B
+// èƒ½åŠ›å€¤ã€æ‰€æŒå“ã€æˆ¦é—˜å‡¦ç†ã€ç¾åœ¨ã®çŠ¶æ…‹ã‚’ä¿æŒã™ã‚‹ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã€‚
 class Actor
 {
 public:
@@ -24,25 +24,25 @@ public:
     const std::string& GetType() const { return mType; }
     const std::string& GetName() const { return mName; }
 
-    // ƒXƒe[ƒ^ƒXæ“¾
+    // ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹å–å¾—
     int GetSpeed() const { return mStats.speed; }
     int GetHp() const { return mHp; }
     int GetAttack() const { return mStats.attack; }
     int GetDefense() const { return mStats.defense; }
 
-    // MP ŠÖ˜A
+    // MP é–¢é€£
     int GetMp() const { return mMp; }
     int GetMaxMp() const { return mStats.maxMp; }
 
-    // –‚–@‚ğŒ‚‚ÂiƒXƒyƒ‹”Ô†‚ğw’èj
+    // é­”æ³•ã‚’æ’ƒã¤ï¼ˆã‚¹ãƒšãƒ«ç•ªå·ã‚’æŒ‡å®šï¼‰
     bool CastSpell(size_t spellIndex, Actor& target);
 
-    // ƒAƒCƒeƒ€ŠÇ—
+    // ã‚¢ã‚¤ãƒ†ãƒ ç®¡ç†
     void AddItem(std::shared_ptr<Item> item);
     const std::vector<std::shared_ptr<Item>>& GetInventory() const { return mInventory; }
-    bool UseItem(size_t index); // g—p‚É¬Œ÷‚µ‚½‚ç true ‚ğ•Ô‚·
+    bool UseItem(size_t index); // ä½¿ç”¨ã«æˆåŠŸã—ãŸã‚‰ true ã‚’è¿”ã™
 
-    // ó‘Ô‹@ŠBi‘Ò‹@EUŒ‚E€–S‚Ìó‘Ô‚ğŠÇ—j
+    // çŠ¶æ…‹æ©Ÿæ¢°ï¼ˆå¾…æ©Ÿãƒ»æ”»æ’ƒãƒ»æ­»äº¡ã®çŠ¶æ…‹ã‚’ç®¡ç†ï¼‰
     StateMachine<Actor>& GetStateMachine() { return mStateMachine; }
 
 private:
@@ -52,15 +52,15 @@ private:
     int mHp;
     int mMp;
 
-    // ƒAƒCƒeƒ€Š
+    // ã‚¢ã‚¤ãƒ†ãƒ æ‰€æŒ
     std::vector<std::shared_ptr<Item>> mInventory;
 
-    // ƒhƒƒbƒvˆ—Ï‚İ‚Ì‹L˜^—piŒ»İ‚Ìˆ—‚Å‚Í–¢g—pj
+    // ãƒ‰ãƒ­ãƒƒãƒ—å‡¦ç†æ¸ˆã¿ã®è¨˜éŒ²ç”¨ï¼ˆç¾åœ¨ã®å‡¦ç†ã§ã¯æœªä½¿ç”¨ï¼‰
     bool mHasDropped = false;
 
-    // ‚±‚ÌƒAƒNƒ^[‚Ìó‘Ô‹@ŠB
+    // ã“ã®ã‚¢ã‚¯ã‚¿ãƒ¼ã®çŠ¶æ…‹æ©Ÿæ¢°
     StateMachine<Actor> mStateMachine;
 
-    friend class Item; // Item::Use ‚ª“à•”‚ÖƒAƒNƒZƒX‚·‚é‚½‚ßiŠÈŒ‰‰»‚Ì‚½‚ßj
+    friend class Item; // Item::Use ãŒå†…éƒ¨ã¸ã‚¢ã‚¯ã‚»ã‚¹ã™ã‚‹ãŸã‚ï¼ˆç°¡æ½”åŒ–ã®ãŸã‚ï¼‰
 };
 
