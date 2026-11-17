@@ -52,11 +52,11 @@ inline void Item::Use(Actor& user) const
     if (mType == ItemType::HP_Potion)
     {
         user.mHp += mValue;
-        if (user.mHp > user.mStats.maxHp) user.mHp = user.mStats.maxHp;
+        if (user.mHp > user.GetMaxHp()) user.mHp = user.GetMaxHp();
     }
     else if (mType == ItemType::MP_Potion)
     {
         user.mMp += mValue;
-        if (user.mMp > user.mStats.maxMp) user.mMp = user.mStats.maxMp;
+        if (user.mMp > user.GetMaxMp()) user.mMp = user.GetMaxMp();
     }
 }

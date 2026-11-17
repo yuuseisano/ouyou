@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -133,6 +133,11 @@
   <ItemGroup>
     <ClInclude Include="Actor.h" />
     <ClInclude Include="DataTable.h" />
+    <ClInclude Include="HeroStats.h" />
+    <ClInclude Include="EnemyStats.h" />
+    <ClInclude Include="Stats.h" />
+    <ClInclude Include="HeroDataTable.h" />
+    <ClInclude Include="EnemyDataTable.h" />
     <ClInclude Include="Factory.h" />
     <ClInclude Include="GameModel.h" />
     <ClInclude Include="GameView.h" />

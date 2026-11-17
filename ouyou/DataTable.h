@@ -1,42 +1,19 @@
 ﻿#pragma once
 
+#include "HeroDataTable.h"
+#include "EnemyDataTable.h"
 #include <string>
-#include <unordered_map>
 
-// ステータス構造体
-struct Stats
-{
-    int maxHp;
-    int maxMp;
-    int attack;
-    int defense;
-    int speed; // 行動順決定用
-};
-
-// データテーブル
+// 用途ごとに異なる型を返し、主人公と敵の専用項目を失わずに取得する。
 class DataTable
 {
 public:
-    static const Stats& Get(const std::string& key)
+    static const HeroStats& GetHero(const std::string& key)
     {
-        auto it = GetTable().find(key);
-        if (it != GetTable().end()) return it->second;
-        // 未登録の種類には共通の初期能力値を使う。
-        return GetTable().at("Default");
+        return HeroDataTable::Get(key);
     }
-
-private:
-    static const std::unordered_map<std::string, Stats>& GetTable()
+    static const EnemyStats& GetEnemy(const std::string& key)
     {
-        static std::unordered_map<std::string, Stats> table = {
-            // 種類名と、最大ＨＰ・最大ＭＰ・攻撃力・防御力・素早さの順で定義する。
-            { "Player",   {100, 30, 20, 5, 10} },
-            { "Slime",    {30, 0, 5, 1, 8} },
-            { "Goblin",   {50, 0, 12, 3, 12} },
-            { "Skeleton", {40, 0, 8, 2, 9} },
-            { "Dragon",   {200, 0, 35, 10, 30} },
-            { "Default",  {10, 0, 1, 0, 5} }
-        };
-        return table;
+        return EnemyDataTable::Get(key);
     }
 };

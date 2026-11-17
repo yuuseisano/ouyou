@@ -33,9 +33,10 @@ public:
 Actor::Actor(const std::string& type, const std::string& name)
     : mType(type)
     , mName(name)
-    , mStats(DataTable::Get(type))
-    , mHp(mStats.maxHp)
-    , mMp(mStats.maxMp)
+    , mHeroStats(type == "Player" ? std::make_unique<HeroStats>(DataTable::GetHero(type)) : nullptr)
+    , mEnemyStats(type != "Player" ? std::make_unique<EnemyStats>(DataTable::GetEnemy(type)) : nullptr)
+    , mHp(GetMaxHp())
+    , mMp(GetMaxMp())
     , mStateMachine(*this)
 {
     // 初期状態は Idle

@@ -25,14 +25,19 @@ public:
     const std::string& GetName() const { return mName; }
 
     // ステータス取得
-    int GetSpeed() const { return mStats.speed; }
+    int GetSpeed() const { return (mHeroStats ? mHeroStats->speed : mEnemyStats->speed); }
     int GetHp() const { return mHp; }
-    int GetAttack() const { return mStats.attack; }
-    int GetDefense() const { return mStats.defense; }
+    int GetAttack() const { return (mHeroStats ? mHeroStats->attack : mEnemyStats->attack); }
+    int GetDefense() const { return (mHeroStats ? mHeroStats->defense : mEnemyStats->defense); }
+
+    // 自分の種類に対応するステータスだけを返す。異なる種類なら nullptr。
+    const HeroStats* GetHeroStats() const { return mHeroStats.get(); }
+    const EnemyStats* GetEnemyStats() const { return mEnemyStats.get(); }
+    int GetMaxHp() const { return mHeroStats ? mHeroStats->maxHp : mEnemyStats->maxHp; }
 
     // MP 関連
     int GetMp() const { return mMp; }
-    int GetMaxMp() const { return mStats.maxMp; }
+    int GetMaxMp() const { return (mHeroStats ? mHeroStats->maxMp : mEnemyStats->maxMp); }
 
     // 魔法を撃つ（スペル番号を指定）
     bool CastSpell(size_t spellIndex, Actor& target);
@@ -48,7 +53,9 @@ public:
 private:
     std::string mType;
     std::string mName;
-    Stats mStats;
+    // コンストラクターで種類に合う片方だけを生成する。
+    std::unique_ptr<HeroStats> mHeroStats;
+    std::unique_ptr<EnemyStats> mEnemyStats;
     int mHp;
     int mMp;
 
@@ -63,4 +70,3 @@ private:
 
     friend class Item; // Item::Use が内部へアクセスするため（簡潔化のため）
 };
-
