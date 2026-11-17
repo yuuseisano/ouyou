@@ -1,5 +1,6 @@
 ﻿#include "GameModel.h"
 #include "Factory.h"
+#include "Item.h"
 #include <algorithm>
 #include <random>
 
@@ -7,7 +8,11 @@ void GameModel::Initialize()
 {
     // 再初期化時も前の戦闘を引き継がず、主人公と敵２体で開始する。
     mActors.clear();
-    AddActor(ActorFactory::Create("Player"));
+    auto player = ActorFactory::Create("Player");
+    // 初期アイテムはゲーム開始時だけ配り、再戦時には追加しない。
+    player->AddItem(std::make_shared<Item>(ItemType::HP_Potion, "HPポーション", 30));
+    player->AddItem(std::make_shared<Item>(ItemType::MP_Potion, "MPポーション", 20));
+    AddActor(player);
     SpawnEnemies(2);
 }
 
@@ -33,6 +38,8 @@ std::vector<std::shared_ptr<Actor>> GameModel::SpawnEnemies(int count)
     for (int i = 0; i < count; ++i)
     {
         auto enemy = ActorFactory::Create(types[distribution(rng)]);
+        const auto player = GetPlayer();
+        enemy->ScaleEnemyStats(player ? player->GetHeroStats()->level : 1);
         AddActor(enemy);
         enemies.push_back(enemy);
     }
@@ -66,4 +73,12 @@ std::vector<std::shared_ptr<Actor>> GameModel::GetTurnOrder() const
         return a->GetName() < b->GetName();
     });
     return order;
+}
+
+void GameModel::UpdateEnemyDifficulty()
+{
+    const auto player = GetPlayer();
+    if (!player || player->IsDead()) return;
+    for (const auto& enemy : GetEnemies())
+        enemy->ScaleEnemyStats(player->GetHeroStats()->level);
 }

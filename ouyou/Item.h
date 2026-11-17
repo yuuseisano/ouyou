@@ -35,8 +35,8 @@ public:
         static std::mt19937& rng = *([]()->std::mt19937* { static std::mt19937 r(static_cast<unsigned int>(std::random_device{}())); return &r; })();
         std::uniform_int_distribution<int> d(1, 100);
         int v = d(rng);
-        if (v <= 40) return std::make_shared<Item>(ItemType::HP_Potion, "Potion", 30); // HP 30 回復
-        if (v <= 60) return std::make_shared<Item>(ItemType::MP_Potion, "Ether", 20);   // MP 20 回復
+        if (v <= 40) return std::make_shared<Item>(ItemType::HP_Potion, "HPポーション", 30); // HP 30 回復
+        if (v <= 60) return std::make_shared<Item>(ItemType::MP_Potion, "MPポーション", 20);   // MP 20 回復
         return nullptr;
     }
 

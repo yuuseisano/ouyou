@@ -9,18 +9,20 @@ class GameView
 public:
     GameView(std::istream& input, std::ostream& output);
     void Message(const std::string& message);
-    // 指定範囲の整数を受け付け、入力が終了した場合は 0 を返す。
+    enum { InputEnded = 0, Cancelled = -1 };
+    // 指定範囲の整数、入力終了の０、Escでのキャンセルの－１を返す。
     int ReadChoice(const std::string& prompt, int minimum, int maximum);
     bool ReadNextWave();
     void ShowActors(const std::vector<std::shared_ptr<Actor>>& actors);
     void ShowTurn(int turn);
     int ReadAction(const Actor& actor);
     int ReadTarget(const std::vector<std::shared_ptr<Actor>>& enemies);
-    int ReadSpell();
+    int ReadSpell(const Actor& actor);
     int ReadItem(const Actor& actor);
     void ShowAttack(const Actor& attacker, const Actor& target, int damage, const std::string& spell = "");
     void ShowRecovery(const Actor& actor, int hp, int mp);
 private:
+    int ReadLine(std::string& line);
     std::istream& mInput;
     std::ostream& mOutput;
 };

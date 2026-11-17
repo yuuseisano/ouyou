@@ -8,6 +8,7 @@ class GameModel
 {
 public:
     void Initialize();
+    void UpdateEnemyDifficulty();
     void AddActor(std::shared_ptr<Actor> actor);
     void RemoveDeadActors();
     std::vector<std::shared_ptr<Actor>> SpawnEnemies(int count);

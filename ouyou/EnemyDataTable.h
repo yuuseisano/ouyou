@@ -20,7 +20,7 @@ private:
     static const std::unordered_map<std::string, EnemyStats>& GetTable()
     {
         static const std::unordered_map<std::string, EnemyStats> table = {
-            // 最大ＨＰ・最大ＭＰ・攻撃力・防御力・素早さ・報酬経験値の順。未設定の報酬は０。
+            // 最大ＨＰ・最大ＭＰ・攻撃力・防御力・素早さ・報酬経験値の順。
             { "Slime",    {30, 0, 5, 1, 8, 5} },
             { "Goblin",   {50, 0, 12, 3, 12, 10} },
             { "Skeleton", {40, 0, 8, 2, 9, 8} },

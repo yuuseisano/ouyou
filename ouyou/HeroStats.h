@@ -8,5 +8,6 @@ struct HeroStats
     int attack;
     int defense;
     int speed;
-    int level; // 初期レベル
+    int level; // 現在のレベル（最大99）
+    int experience; // 次のレベルに向けて蓄積した経験値
 };

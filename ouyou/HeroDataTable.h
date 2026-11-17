@@ -20,9 +20,9 @@ private:
     static const std::unordered_map<std::string, HeroStats>& GetTable()
     {
         static const std::unordered_map<std::string, HeroStats> table = {
-            // 最大ＨＰ・最大ＭＰ・攻撃力・防御力・素早さ・初期レベルの順。
-            { "Player",  {100, 30, 20, 5, 10, 1} },
-            { "Default", {100, 30, 20, 5, 10, 1} }
+            // 最大ＨＰ・最大ＭＰ・攻撃力・防御力・素早さ・初期レベル・初期経験値の順。
+            { "Player",  {100, 30, 20, 5, 10, 1, 0} },
+            { "Default", {100, 30, 20, 5, 10, 1, 0} }
         };
         return table;
     }
