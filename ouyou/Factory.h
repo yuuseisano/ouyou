@@ -8,12 +8,12 @@
 class ActorFactory
 {
 public:
-    // コンストラクタ非公開（static メソッドのみ使用）
+    // インスタンス化は禁止し、静的な生成関数だけを使う。
     ActorFactory() = delete;
 
     static std::shared_ptr<Actor> Create(const std::string& type)
     {
-        // コンストラクタを使って生成（要求のコンストラクタ使用）
+        // 種類に応じた名前を付けて生成し、敵には種類ごとの連番を付ける。
         if (type == "Player")
         {
             return std::make_shared<Actor>("Player", "主人公");

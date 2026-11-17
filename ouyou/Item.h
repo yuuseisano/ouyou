@@ -31,7 +31,7 @@ public:
     // ランダムドロップ生成ユーティリティ
     static std::shared_ptr<Item> CreateRandomDrop()
     {
-        // Drop率: 60%で何かドロップ（Potion:40%, Ether:20%），40%は何も落とさない（呼び出し側で nullptr をチェック）
+        // ポーション40％、エーテル20％、ドロップなし40％。呼び出し側で空のポインターを確認する。
         static std::mt19937& rng = *([]()->std::mt19937* { static std::mt19937 r(static_cast<unsigned int>(std::random_device{}())); return &r; })();
         std::uniform_int_distribution<int> d(1, 100);
         int v = d(rng);

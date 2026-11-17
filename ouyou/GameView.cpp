@@ -12,9 +12,11 @@ int GameView::ReadChoice(const std::string& prompt, int minimum, int maximum)
     for (std::string line;;)
     {
         mOutput << prompt;
+        // 入力終了を通知し、再入力を無限に繰り返さない。
         if (!std::getline(mInput, line)) return 0;
         std::istringstream stream(line);
         int value;
+        // 整数の後ろは空白だけを許し、数字に文字が続く入力は拒否する。
         if ((stream >> value) && (stream >> std::ws).eof() && value >= minimum && value <= maximum)
             return value;
         mOutput << minimum << "～" << maximum << " の整数を入力してください。\n";
@@ -25,6 +27,7 @@ bool GameView::ReadNextWave()
 {
     Message("敵を全て倒しました！ スペースを入力して Enter で次の敵へ。その他は終了。 ");
     std::string line;
+    // 行頭が半角スペースの場合だけ、次の戦闘へ進む。
     return std::getline(mInput, line) && !line.empty() && line[0] == ' ';
 }
 

@@ -11,7 +11,7 @@ struct Spell
     int power;  // 威力（魔法ダメージ）
 };
 
-// 弱い魔法から強い魔法までを返すユーティリティ
+// 選択画面で使う順序で、魔法名・消費ＭＰ・威力の一覧を返す。
 inline const std::vector<Spell>& GetSpellBook()
 {
     static std::vector<Spell> spells = {

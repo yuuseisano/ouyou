@@ -3,7 +3,7 @@
 
 #include <algorithm>
 
-// 簡易状態：Idle / Attack / Dead
+// 待機・攻撃・死亡を表す簡易状態。各状態の開始・実行・終了処理は現在空。
 class IdleState : public State<Actor>
 {
 public:

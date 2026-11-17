@@ -22,6 +22,7 @@ public:
 
     void ChangeState(std::shared_ptr<State<T>> newState)
     {
+        // 旧状態の終了処理を済ませ、新状態へ切り替えて開始処理を行う。
         if (mCurrent) mCurrent->Exit(mOwner);
         mCurrent = newState;
         if (mCurrent) mCurrent->Enter(mOwner);

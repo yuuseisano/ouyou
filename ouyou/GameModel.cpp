@@ -5,6 +5,7 @@
 
 void GameModel::Initialize()
 {
+    // 再初期化時も前の戦闘を引き継がず、主人公と敵２体で開始する。
     mActors.clear();
     AddActor(ActorFactory::Create("Player"));
     SpawnEnemies(2);
@@ -17,6 +18,7 @@ void GameModel::AddActor(std::shared_ptr<Actor> actor)
 
 void GameModel::RemoveDeadActors()
 {
+    // 死亡した要素を末尾にまとめてから、一括で削除する。
     mActors.erase(std::remove_if(mActors.begin(), mActors.end(),
         [](const std::shared_ptr<Actor>& actor) { return actor->IsDead(); }), mActors.end());
 }
@@ -25,6 +27,7 @@ std::vector<std::shared_ptr<Actor>> GameModel::SpawnEnemies(int count)
 {
     static std::mt19937 rng(std::random_device{}());
     const char* types[] = { "Slime", "Goblin", "Skeleton", "Dragon" };
+    // スライム、ゴブリン、スケルトン、ドラゴンの順に出現比率を指定する。
     std::discrete_distribution<int> distribution({ 50, 30, 15, 5 });
     std::vector<std::shared_ptr<Actor>> enemies;
     for (int i = 0; i < count; ++i)
@@ -53,11 +56,13 @@ std::shared_ptr<Actor> GameModel::GetPlayer() const
 
 std::vector<std::shared_ptr<Actor>> GameModel::GetTurnOrder() const
 {
+    // 管理中の一覧は並べ替えず、生存者のコピーで行動順を決める。
     std::vector<std::shared_ptr<Actor>> order;
     for (const auto& actor : mActors)
         if (!actor->IsDead()) order.push_back(actor);
     std::sort(order.begin(), order.end(), [](const std::shared_ptr<Actor>& a, const std::shared_ptr<Actor>& b) {
         if (a->GetSpeed() != b->GetSpeed()) return a->GetSpeed() > b->GetSpeed();
+        // 素早さが等しい場合は、名前で順序を決める。
         return a->GetName() < b->GetName();
     });
     return order;

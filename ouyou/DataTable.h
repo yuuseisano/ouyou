@@ -21,6 +21,7 @@ public:
     {
         auto it = GetTable().find(key);
         if (it != GetTable().end()) return it->second;
+        // –¢“o˜^‚Ìí—Ş‚É‚Í‹¤’Ê‚Ì‰Šú”\—Í’l‚ğg‚¤B
         return GetTable().at("Default");
     }
 
@@ -28,7 +29,7 @@ private:
     static const std::unordered_map<std::string, Stats>& GetTable()
     {
         static std::unordered_map<std::string, Stats> table = {
-            // { "Type", { maxHp, maxMp, attack, defense, speed } }
+            // í—Ş–¼‚ÆAÅ‘å‚g‚oEÅ‘å‚l‚oEUŒ‚—ÍE–hŒä—ÍE‘f‘‚³‚Ì‡‚Å’è‹`‚·‚éB
             { "Player",   {100, 30, 20, 5, 10} },
             { "Slime",    {30, 0, 5, 1, 8} },
             { "Goblin",   {50, 0, 12, 3, 12} },

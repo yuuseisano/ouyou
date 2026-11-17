@@ -21,10 +21,10 @@ public:
             return obj;
         }
 
-        // カスタム deleter を使って、Release を呼ぶようにする
+        // 新規生成分は独自の削除処理で回収する。プールは取得した参照より長く生存させる。
         std::shared_ptr<T> ptr(new T(), [this](T* p) {
-            // デフォルト delete する代わりにプールに戻す
-            std::shared_ptr<T> sp(p, [](T*){}); // 一時 shared_ptr（所有権は維持しない）
+            // オブジェクトを削除せず、空き一覧へ戻す。
+            std::shared_ptr<T> sp(p, [](T*){}); // 削除処理を持たない参照として保持する。
             mFree.push(sp);
         });
         return ptr;

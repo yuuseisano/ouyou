@@ -2,7 +2,7 @@
 #include "GameModel.h"
 #include "GameView.h"
 
-// Controller: coordinates player commands, enemy actions, and turns.
+// プレイヤーの操作と敵の行動を振り分け、ターンと戦闘の進行を制御する。
 class GameController
 {
 public:

@@ -3,12 +3,13 @@
 #include <iosfwd>
 #include <string>
 
-// View: all console input, validation, and presentation.
+// コンソール表示、入力の受け取り、入力形式と範囲の検証を担当する。
 class GameView
 {
 public:
     GameView(std::istream& input, std::ostream& output);
     void Message(const std::string& message);
+    // 指定範囲の整数を受け付け、入力が終了した場合は 0 を返す。
     int ReadChoice(const std::string& prompt, int minimum, int maximum);
     bool ReadNextWave();
     void ShowActors(const std::vector<std::shared_ptr<Actor>>& actors);

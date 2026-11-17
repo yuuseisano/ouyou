@@ -9,6 +9,7 @@
 
 class Item; // 前方宣言
 
+// 能力値、所持品、戦闘処理、現在の状態を保持するキャラクター。
 class Actor
 {
 public:
@@ -41,7 +42,7 @@ public:
     const std::vector<std::shared_ptr<Item>>& GetInventory() const { return mInventory; }
     bool UseItem(size_t index); // 使用に成功したら true を返す
 
-    // FSM
+    // 状態機械（待機・攻撃・死亡の状態を管理）
     StateMachine<Actor>& GetStateMachine() { return mStateMachine; }
 
 private:
@@ -54,10 +55,10 @@ private:
     // アイテム所持
     std::vector<std::shared_ptr<Item>> mInventory;
 
-    // ドロップ済みフラグ（倒された敵が複数回処理されないように）
+    // ドロップ処理済みの記録用（現在の処理では未使用）
     bool mHasDropped = false;
 
-    // Actor 用 FSM
+    // このアクターの状態機械
     StateMachine<Actor> mStateMachine;
 
     friend class Item; // Item::Use が内部へアクセスするため（簡潔化のため）

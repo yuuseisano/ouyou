@@ -1,7 +1,7 @@
 #pragma once
 #include "GameModel.h"
 
-// Application facade: keeps the existing entry point compatible.
+// 既存の起動方法を保ち、モデル・ビュー・コントローラーを組み立てる窓口。
 class Game
 {
 public:

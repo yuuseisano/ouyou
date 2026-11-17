@@ -3,7 +3,7 @@
 #include <memory>
 #include <vector>
 
-// Model: owns the actors and rules; has no console dependency.
+// アクターとゲームのルールを管理する。コンソールへの入出力は行わない。
 class GameModel
 {
 public:

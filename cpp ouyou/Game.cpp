@@ -34,7 +34,7 @@ namespace
         }
     }
 
-    // ランダム生成用ユーティリティ（重み付き）
+    // 乱数生成器を初回だけ初期化し、以後の抽選でも同じ生成器を使う
     std::mt19937& GetRng()
     {
         static std::mt19937 rng(static_cast<unsigned int>(std::random_device{}()));
@@ -49,6 +49,7 @@ namespace
         std::discrete_distribution<int> dist(weights.begin(), weights.end());
 
         std::vector<std::shared_ptr<Actor>> result;
+        // 生成数に合わせて領域を確保し、追加時の再確保を減らす
         result.reserve(count);
         for (int i = 0; i < count; ++i)
         {
@@ -59,6 +60,7 @@ namespace
     }
 }
 
+// ゲーム全体で共有する唯一のインスタンスを返す
 Game& Game::Instance()
 {
     static Game instance;
@@ -70,11 +72,13 @@ Game::Game()
     // 初期データテーブルは Factory が使うためここでは何もしない
 }
 
+// プレイヤーと敵を共通のアクター一覧で管理する
 void Game::AddActor(std::shared_ptr<Actor> actor)
 {
     mActors.push_back(actor);
 }
 
+// 死亡したアクターを末尾へまとめ、その範囲を一覧から削除する
 void Game::RemoveDeadActors()
 {
     mActors.erase(
@@ -83,6 +87,7 @@ void Game::RemoveDeadActors()
         mActors.end());
 }
 
+// 初期配置を行い、終了条件を満たすまでターンを進める
 void Game::Run()
 {
     // プレイヤー生成
@@ -115,11 +120,12 @@ void Game::Run()
             if (i >= mActors.size()) break;
 
             auto& actor = mActors[i];
+            // このターン中に倒されたアクターには行動させない
             if (actor->IsDead()) continue;
 
             if (actor->GetType() == "Player")
             {
-                // プレイヤー入力メニュー（敵追加は削除）
+                // 入力された番号に応じて、このターンの行動を選ぶ
                 std::cout << "\nあなたの番: " << actor->GetName() << " (HP: " << actor->GetHp() << ")\n";
                 std::cout << "1) 攻撃  2) ステータス表示  3) 待機  4) 終了\n";
                 int choice = ReadIntInRange("選択> ", 1, 4);
@@ -146,6 +152,7 @@ void Game::Run()
                             std::cout << (idx + 1) << ") " << enemies[idx]->GetName() << " (HP: " << enemies[idx]->GetHp() << ")\n";
                         }
                         int t = ReadIntInRange("対象番号> ", 1, static_cast<int>(enemies.size()));
+                        // 表示上の番号は1始まりなので、添字に変換して攻撃する
                         actor->Attack(*enemies[t - 1]);
                     }
                 }
@@ -172,7 +179,7 @@ void Game::Run()
             }
             else
             {
-                // 敵のAI：最も近いプレイヤーを攻撃
+                // 一覧で最初に見つかった生存中のプレイヤーを攻撃する
                 std::shared_ptr<Actor> playerTarget = nullptr;
                 for (auto& a : mActors)
                 {
@@ -184,13 +191,14 @@ void Game::Run()
                 }
             }
 
-            // 各ターンごとに状態更新
+            // 行動を終えたアクターの状態を更新する
             actor->Update();
 
             // プレイヤーが要求した終了ならループ抜け
             if (quitRequested) break;
         }
 
+        // 全員の行動後に削除し、行動中の一覧の添字がずれるのを避ける
         RemoveDeadActors();
 
         // 終了判定: プレイヤーが生存しているか、敵が全滅しているか、またはプレイヤー終了要求
@@ -219,6 +227,7 @@ void Game::Run()
             break;
         }
 
+        // 終了条件を満たさなければ、次のターンへ進む
         ++turn;
         std::this_thread::sleep_for(std::chrono::milliseconds(300));
     }
