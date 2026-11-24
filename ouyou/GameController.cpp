@@ -3,6 +3,7 @@
 #include <chrono>
 #include <thread>
 
+
 void GameController::Attack(Actor& attacker, Actor& target)
 {
     const int damage = attacker.Attack(target);
